@@ -50,9 +50,20 @@ public class CalculadoraTest {
 	public void salario8() throws Exception {
 		assertEquals(1660.0, cal.calculaSalarioBruto(TipoEmpleado.ENCARGADO, (float) 0, (float) 8), 0.0f);
 	}
-	/*
-	 * vendedor, -1 euros, 8h ->Exception vendedor, 1500 euros, -1h ->Exception
-	 * null, 1500 euros, 8h ->Exception
-	 */
+
+	@Test(expected = Exception.class)
+	public void salario9() throws Exception {
+		assertEquals(0, cal.calculaSalarioBruto(TipoEmpleado.VENDEDOR, (float) -1, (float) 8), 0.0f);
+	}
+
+	@Test(expected = Exception.class)
+	public void salario10() throws Exception {
+		assertEquals(0, cal.calculaSalarioBruto(TipoEmpleado.VENDEDOR, (float) 1500, (float) -1), 0.0f);
+	}
+
+	@Test(expected = Exception.class)
+	public void salario11() throws Exception {
+		assertEquals(0, cal.calculaSalarioBruto(null, (float) 1500, (float) 8), 0.0f);
+	}
 
 }
