@@ -9,27 +9,56 @@ public class CalculadoraSalarial {
 	 * null, o ventasMes es negativo o horasExtra es negativo el método lanzará un
 	 * new Exception
 	 */
-	public float calculaSalarioBruto(TipoEmpleado tipo, float ventasMes, float horasExtra) {
+	public float calculaSalarioBruto(TipoEmpleado tipo, float ventasMes, float horasExtra) throws Exception {
 		float salario = 0.0f;
-		if (tipo.equals(TipoEmpleado.VENDEDOR)) {
-			salario = 1000;
+
+		if (!horasExtraNegativas(horasExtra) || !ventasMesNegativas(ventasMes) || !tipoIsNull(tipo)) {
+			return 0;
+		} else {
+			if (tipo.equals(TipoEmpleado.VENDEDOR)) {
+				salario = 1000;
+			}
+			if (tipo.equals(TipoEmpleado.ENCARGADO)) {
+				salario = 1500;
+			}
+			if (ventasMes >= 1500) {
+				salario += 200;
+			} else if (ventasMes >= 1000) {
+				salario += 100;
+			}
+			salario += (horasExtra * 20);
+			
 		}
-		if (tipo.equals(TipoEmpleado.ENCARGADO)) {
-			salario = 1500;
-		}
-		if (ventasMes >= 1500) {
-			salario += 200;
-		} else if (ventasMes >= 1000) {
-			salario += 100;
-		}
-		salario += (horasExtra * 20);
+
 		return salario;
+
 	}
 
-	public boolean ifTipoIsNull(TipoEmpleado tipo) {
-		boolean bandera = true;
+	public boolean horasExtraNegativas(float horasExtra) throws Exception {
+		boolean bandera = false;
+		if (horasExtra < 0) {
+			bandera = true;
+			throw new Exception("Horas extra negativas");
+		}
+
+		return bandera;
+	}
+
+	public boolean ventasMesNegativas(float ventasMes) throws Exception {
+		boolean bandera = false;
+		if (ventasMes < 0) {
+			bandera = true;
+			throw new Exception("Ventas del mes negativas");
+		}
+
+		return bandera;
+	}
+
+	public boolean tipoIsNull(TipoEmpleado tipo) throws Exception {
+		boolean bandera = false;
 		if (tipo == null) {
-			bandera = false;
+			bandera = true;
+			throw new Exception("Tipo de Empleado es nulo");
 		}
 		return bandera;
 	}
